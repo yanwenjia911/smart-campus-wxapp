@@ -1,0 +1,13 @@
+# 依赖包
+node_modules/
+.npm/
+
+# 微信开发者工具的本地私有配置（千万不能传）
+project.private.config.json
+
+# 编译或打包产物 (若使用了 uni-app 等框架)
+dist/
+unpackage/
+
+# Mac 缓存
+.DS_Store

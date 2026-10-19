@@ -1,0 +1,67 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/auth/index",
+    "pages/course/index",
+    "pages/course/detail",
+    "pages/grade/index",
+    "pages/profile/index",
+    "pages/notice/index",
+    "pages/notice/detail",
+    "pages/repair/index",
+    "pages/card/index",
+    "pages/chat/chat"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1aad19",
+    "navigationBarTitleText": "智慧校园",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f0f2f5",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#1aad19",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home_active.png"
+      },
+      {
+        "pagePath": "pages/course/index",
+        "text": "课程",
+        "iconPath": "assets/icons/course.png",
+        "selectedIconPath": "assets/icons/course_active.png"
+      },
+      {
+        "pagePath": "pages/notice/index",
+        "text": "通知",
+        "iconPath": "assets/icons/notice.png",
+        "selectedIconPath": "assets/icons/notice_active.png"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "AI助手",
+        "iconPath": "assets/icons/chat.png",
+        "selectedIconPath": "assets/icons/chat_active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile_active.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

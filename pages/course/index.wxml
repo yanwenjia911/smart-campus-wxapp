@@ -1,0 +1,144 @@
+<!-- pages/schedule/index.wxml - 课程表 -->
+<view class="timetable-container">
+  
+  <!-- 1. 顶部周次/日期切换卡 -->
+  <view class="stat-card">
+    <view class="stat-header">
+      <!-- 周次切换选择器 -->
+      <picker mode="selector" range="{{weeks}}" value="{{weekIndex}}" bindchange="onWeekChange">
+        <view class="semester-picker">
+          <text class="semester-text">第 {{currentWeek}} 周</text>
+          <text class="picker-icon-arrow"></text>
+        </view>
+      </picker>
+
+      <!-- 视图切换：今日课程 / 周视图 -->
+      <view class="view-tabs">
+        <view class="tab-item {{viewMode === 'day' ? 'active' : ''}}" bindtap="setDayView">今日</view>
+        <view class="tab-item {{viewMode === 'week' ? 'active' : ''}}" bindtap="setWeekView">本周</view>
+      </view>
+    </view>
+
+    <!-- 顶部统计/状态行 -->
+    <view class="stat-row">
+      <view class="stat-item">
+        <view class="stat-value">{{todayCourseCount}}</view>
+        <view class="stat-label">今日课程</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <view class="stat-value gpa-highlight">{{nextCourseTime || '--:--'}}</view>
+        <view class="stat-label">下一节课</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <view class="stat-value">{{totalWeekHours}}</view>
+        <view class="stat-label">周总学时</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 2. 日期横向滚动导航 (仅在今日视图下显示) -->
+  <scroll-view scroll-x class="date-nav" wx:if="{{viewMode === 'day'}}" scroll-into-view="day-{{selectedDay}}">
+    <view 
+      class="date-item {{selectedDay === index ? 'active' : ''}}" 
+      wx:for="{{weekDays}}" 
+      wx:key="index"
+      id="day-{{index}}"
+      bindtap="onDaySelect"
+      data-index="{{index}}"
+    >
+      <text class="weekday">{{item.label}}</text>
+      <text class="day-num">{{item.date}}</text>
+
+      
+    </view>
+  </scroll-view>
+
+  
+
+  <!-- 3. 课程列表区域 -->
+  
+  <!-- 状态 A: 加载中 -->
+  <view class="state-box loading-box" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text>正在同步课表...</text>
+  </view>
+
+  <!-- 状态 B: 每日课程列表 -->
+  <scroll-view scroll-y class="content-scroll" wx:elif="{{viewMode === 'day'}}">
+    <block wx:if="{{courses.length > 0}}">
+      <view 
+        class="grade-card {{item.isFinished ? 'course-finished' : ''}}" 
+        wx:for="{{courses}}" 
+        wx:key="id" 
+        hover-class="card-hover"
+        bindtap="goToCourseDetail" 
+        data-id="{{item.id}}"
+      >
+        <!-- 左侧时间节次区 -->
+        <view class="grade-left">
+          <view class="time-box">
+            <text class="start-time">{{item.startTime}}</text>
+            <view class="time-line"></view>
+            <text class="end-time">{{item.endTime}}</text>
+          </view>
+        </view>
+
+        <!-- 中间课程信息区 -->
+        <view class="grade-info">
+          <view class="course-main">
+            <text class="course-name">{{item.courseName}}</text>
+            <!-- 状态标签：正在上课/实验室/选修 -->
+            <text class="grade-level-badge {{item.isCurrent ? 'live-badge' : ''}}">
+              {{item.isCurrent ? '上课中' : item.sectionText}}
+            </text>
+          </view>
+          
+          <view class="location-row">
+            <text class="location-icon">📍</text>
+            <text class="location-text">{{item.location}}</text>
+          </view>
+          
+          <view class="teacher-info">
+            <text class="teacher-name">{{item.teacherName}}</text>
+            <text class="split">|</text>
+            <text class="exam-type">第 {{item.weeksRange}} 周</text>
+          </view>
+        </view>
+        
+        <!-- 右侧签到/详情入口 -->
+        <view class="action-arrow">
+          <view class="dot-dot-dot"></view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态：无课 -->
+    <view class="empty-box" wx:else>
+      <text class="empty-icon">☕</text>
+      <text class="empty-text">今天没课，去图书馆转转吧</text>
+    </view>
+  </scroll-view>
+
+  <!-- 状态 C: 周视图 (格子样式展示) -->
+  <scroll-view scroll-y class="content-scroll" wx:elif="{{viewMode === 'week'}}">
+    <view class="week-grid-container">
+      <!-- 这里通常使用 Grid 布局，展示 7列 x 节次的简易矩阵 -->
+      <view class="grid-helper-text">点击课程名可查看详细教室安排</view>
+      <view class="semester-section" wx:for="{{weekSchedule}}" wx:key="day">
+        <view class="semester-group-header">
+          <text class="semester-group-name">{{item.dayLabel}}</text>
+          <text class="semester-group-stat">{{item.list.length}} 节课</text>
+        </view>
+        <view class="mini-grade-list">
+          <view class="grade-card-mini" wx:for="{{item.list}}" wx:key="id" wx:for-item="course">
+            <text class="mini-name">{{course.courseName}}</text>
+            <text class="mini-score" style="color: #1677ff">{{course.locationShort}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+</view>

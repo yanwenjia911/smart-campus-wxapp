@@ -1,0 +1,169 @@
+/* pages/grade/index.wxss */
+page { background: #f0f2f5; }
+
+.grade-container { min-height: 100vh; }
+
+/* 统计卡 */
+.stat-card {
+  background: linear-gradient(135deg, #1a7a3c 0%, #1aad19 100%);
+  padding: 40rpx 32rpx 50rpx;
+  margin-bottom: -20rpx;
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40rpx;
+}
+
+.semester-picker {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  background: rgba(255,255,255,0.2);
+  padding: 12rpx 24rpx;
+  border-radius: 40rpx;
+}
+
+.semester-text { font-size: 28rpx; color: #fff; font-weight: 500; }
+.picker-arrow { font-size: 20rpx; color: rgba(255,255,255,0.8); }
+
+.view-tabs { display: flex; background: rgba(255,255,255,0.15); border-radius: 20rpx; padding: 4rpx; }
+
+.tab {
+  padding: 10rpx 28rpx;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  color: rgba(255,255,255,0.7);
+}
+
+.tab.active { background: rgba(255,255,255,0.25); color: #fff; font-weight: 600; }
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.stat-item { display: flex; flex-direction: column; align-items: center; }
+
+.stat-value {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.gpa-value { color: #ffe88a; }
+
+.stat-label { font-size: 24rpx; color: rgba(255,255,255,0.75); margin-top: 6rpx; }
+
+.stat-divider { width: 1rpx; height: 64rpx; background: rgba(255,255,255,0.2); }
+
+/* 成绩列表 */
+.grade-list {
+  padding: 32rpx 32rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.grade-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+  gap: 24rpx;
+  transition: transform 0.15s;
+}
+
+.grade-card:active { transform: scale(0.98); }
+
+.grade-left { flex-shrink: 0; }
+
+.score-circle {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 4rpx solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-num { font-size: 34rpx; font-weight: 700; color: #1a1a1a; }
+
+.grade-info { flex: 1; }
+
+.course-name { font-size: 30rpx; font-weight: 600; color: #1a1a1a; display: block; }
+.course-code { font-size: 24rpx; color: #999; display: block; margin-top: 4rpx; }
+
+.grade-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 10rpx;
+}
+
+.meta-item { font-size: 24rpx; color: #666; }
+
+.grade-level-badge {
+  font-size: 22rpx;
+  background: #e8f7e8;
+  color: #1aad19;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.teacher-text { font-size: 24rpx; color: #999; display: block; margin-top: 6rpx; }
+
+/* 全部汇总视图 */
+.all-view { padding: 32rpx; }
+
+.semester-section { margin-bottom: 32rpx; }
+
+.semester-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #eee;
+}
+
+.semester-group-name { font-size: 30rpx; font-weight: 700; color: #1a1a1a; }
+
+.semester-group-stat { display: flex; gap: 16rpx; }
+
+.group-gpa { font-size: 26rpx; color: #1aad19; font-weight: 500; }
+.group-credits { font-size: 26rpx; color: #888; }
+
+.grade-card-mini {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  margin-bottom: 10rpx;
+}
+
+.mini-name { font-size: 28rpx; color: #333; flex: 1; }
+.mini-score { font-size: 32rpx; font-weight: 700; }
+
+/* 加载 & 空状态 */
+.loading-box { display: flex; flex-direction: column; align-items: center; padding: 80rpx; }
+.loading-spinner {
+  width: 60rpx; height: 60rpx;
+  border: 4rpx solid #e8e8e8;
+  border-top-color: #1aad19;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 26rpx; color: #999; margin-top: 16rpx; }
+.empty-box { display: flex; flex-direction: column; align-items: center; padding: 80rpx; }
+.empty-icon { font-size: 100rpx; }
+.empty-text { font-size: 28rpx; color: #999; margin-top: 20rpx; }

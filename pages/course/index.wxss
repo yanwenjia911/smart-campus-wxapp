@@ -1,0 +1,331 @@
+/* 全局背景 */
+.timetable-container {
+  min-height: 100vh;
+  background-color: #f6f7f9;
+  padding-bottom: 60rpx;
+}
+
+/* --- 1. 顶部统计卡片 (沿用成绩单风格) --- */
+.stat-card {
+  background: linear-gradient(135deg, #07c160 0%, #15d177 100%);
+  padding: 40rpx 30rpx 80rpx 30rpx; /* 底部预留空间给卡片重叠 */
+  color: white;
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.semester-picker {
+  display: flex;
+  align-items: center;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.picker-icon-arrow {
+  width: 0;
+  height: 0;
+  border-left: 10rpx solid transparent;
+  border-right: 10rpx solid transparent;
+  border-top: 12rpx solid white;
+  margin-left: 12rpx;
+}
+
+.view-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30rpx;
+  padding: 4rpx;
+}
+
+.tab-item {
+  padding: 8rpx 30rpx;
+  font-size: 24rpx;
+  border-radius: 26rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: #ffffff;
+  color: #07c160;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  opacity: 0.8;
+  margin-top: 6rpx;
+  display: block;
+}
+
+.stat-divider {
+  width: 1rpx;
+  height: 40rpx;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* --- 2. 日期横向滚动导航 --- */
+.date-nav {
+  width: 100%;
+  white-space: nowrap; /* 强制不换行，允许滑动 */
+  background: #ffffff;
+  padding: 24rpx 0 16rpx 0;
+  margin-top: -50rpx; /* 💎关键协调点：向上偏移，压在绿色卡片上，完美衔接 */
+  border-radius: 30rpx 30rpx 0 0; /* 💎顶部大圆角，显得圆润现代 */
+  border-bottom: 1rpx solid #f4f5f7;
+  box-sizing: border-box;
+}
+
+.date-item {
+  display: inline-flex; /* 结合 inline（同行排布）和 flex（内部上下居中）的优势 */
+  flex-direction: column;
+  align-items: center;
+  width: 14.28%; /* 屏幕刚好平分7天。如果想让每天宽一点且能滑得更远，可改为 16% */
+  padding: 10rpx 0;
+  vertical-align: top; /* 💎【解决错位核心】防止因为选中/未选中的微小高度差导致的上下跳动 */
+  transition: all 0.2s;
+}
+
+.date-item.active {
+  color: #07c160;
+}
+
+.date-item.active .day-num {
+  background: #07c160;
+  color: white;
+  border-radius: 50%;
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekday {
+  font-size: 22rpx;
+  margin-bottom: 8rpx;
+}
+
+.day-num {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+/* --- 3. 课程卡片列表 --- */
+.content-scroll {
+  padding-top: 20rpx;
+}
+
+.grade-card {
+  background: #ffffff;
+  margin: 0 30rpx 24rpx 30rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  display: flex;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+}
+
+.card-hover {
+  background: #f9f9f9;
+}
+
+/* 已结束课程置灰 */
+.course-finished {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
+.grade-left {
+  width: 120rpx;
+  border-right: 1rpx dashed #eee;
+  margin-right: 30rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-time {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.time-line {
+  width: 2rpx;
+  height: 20rpx;
+  background: #ddd;
+  margin: 4rpx 0;
+}
+
+.end-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.grade-info {
+  flex: 1;
+}
+
+.course-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.course-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.grade-level-badge {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  background: #f0f0f0;
+  color: #666;
+  border-radius: 6rpx;
+  margin-left: 10rpx;
+}
+
+.live-badge {
+  background: #e6f7ff;
+  color: #1677ff;
+  border: 1rpx solid #91d5ff;
+}
+
+.location-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.location-icon {
+  font-size: 24rpx;
+  margin-right: 8rpx;
+}
+
+.location-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.teacher-info {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.split {
+  margin: 0 10rpx;
+}
+
+/* --- 4. 周视图展示 (Semester View) --- */
+.semester-group-header {
+  padding: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.semester-group-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.semester-group-stat {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.mini-grade-list {
+  background: #ffffff;
+  margin: 0 30rpx 30rpx 30rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.grade-card-mini {
+  display: flex;
+  justify-content: space-between;
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.grade-card-mini:last-child {
+  border-bottom: none;
+}
+
+.mini-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.mini-score {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+/* --- 5. 状态机样式 (Loading/Empty) --- */
+.state-box {
+  padding: 100rpx 0;
+  text-align: center;
+  color: #999;
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #07c160;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty-box {
+  padding: 150rpx 0;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

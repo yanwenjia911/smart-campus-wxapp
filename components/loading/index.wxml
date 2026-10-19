@@ -1,0 +1,6 @@
+// components/loading/index.js
+Component({
+  properties: {
+    visible: { type: Boolean, value: false }
+  }
+});

@@ -1,0 +1,6 @@
+// components/nav-bar/index.js
+Component({
+  properties: {
+    title: { type: String, value: '标题' }
+  }
+});

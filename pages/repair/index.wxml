@@ -1,0 +1,171 @@
+<!-- pages/repair/index.wxml - 在线报修 -->
+<view class="repair-container">
+  <!-- Tab 切换：提交/我的工单 -->
+  <view class="tab-bar">
+    <view
+      class="tab-item {{currentTab === 'submit' ? 'active' : ''}}"
+      id="tab-submit"
+      bindtap="switchTab"
+      data-tab="submit"
+    >提交报修</view>
+    <view
+      class="tab-item {{currentTab === 'myTickets' ? 'active' : ''}}"
+      id="tab-my-tickets"
+      bindtap="switchTab"
+      data-tab="myTickets"
+    >我的工单</view>
+    <view class="tab-indicator" style="left: {{currentTab === 'submit' ? '0' : '50%'}}"></view>
+  </view>
+
+  <!-- 提交报修表单 -->
+  <scroll-view scroll-y wx:if="{{currentTab === 'submit'}}" class="form-scroll">
+    <view class="form-section">
+      <!-- 报修类别 -->
+      <view class="form-item">
+        <text class="form-label required-star">报修类别</text>
+        <view class="category-grid">
+          <view
+            class="category-item {{selectedCategory === item ? 'selected' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="*this"
+            wx:for-item="item"
+            bindtap="selectCategory"
+            data-cat="{{item}}"
+          >
+            <text class="cat-icon">{{catIcons[index]}}</text>
+            <text class="cat-name">{{item}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 报修标题 -->
+      <view class="form-item">
+        <text class="form-label required-star">问题标题</text>
+        <input
+          class="form-input"
+          id="input-title"
+          placeholder="简要描述问题（如：宿舍灯泡损坏）"
+          value="{{form.title}}"
+          bindinput="onTitleInput"
+          maxlength="50"
+        />
+      </view>
+
+      <!-- 报修地点 -->
+      <view class="form-item">
+        <text class="form-label required-star">报修地点</text>
+        <input
+          class="form-input"
+          id="input-location"
+          placeholder="如：3号宿舍楼 306室"
+          value="{{form.repairLocation}}"
+          bindinput="onLocationInput"
+          maxlength="100"
+        />
+      </view>
+
+      <!-- 联系电话 -->
+      <view class="form-item">
+        <text class="form-label required-star">联系电话</text>
+        <input
+          class="form-input"
+          id="input-phone"
+          placeholder="请输入您的联系电话"
+          value="{{form.contactPhone}}"
+          bindinput="onPhoneInput"
+          type="number"
+          maxlength="11"
+        />
+      </view>
+
+      <!-- 详细描述 -->
+      <view class="form-item">
+        <text class="form-label">详细描述（选填）</text>
+        <textarea
+          class="form-textarea"
+          id="textarea-desc"
+          placeholder="请详细描述故障情况，方便维修人员快速定位问题..."
+          value="{{form.description}}"
+          bindinput="onDescInput"
+          maxlength="300"
+          auto-height
+        />
+        <text class="char-count">{{form.description.length}}/300</text>
+      </view>
+
+      <!-- 提交按钮 -->
+      <view class="form-submit">
+        <button
+          class="btn-submit"
+          id="btn-submit-repair"
+          bindtap="submitRepair"
+          loading="{{submitting}}"
+          disabled="{{submitting}}"
+        >
+          🔧 提交报修申请
+        </button>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 我的工单列表 -->
+  <scroll-view scroll-y wx:elif="{{currentTab === 'myTickets'}}" class="tickets-scroll" bindscrolltolower="loadMoreTickets">
+    <!-- 状态筛选 -->
+    <view class="status-filter">
+      <view
+        class="status-btn {{filterStatus === '' ? 'active' : ''}}"
+        bindtap="filterTickets"
+        data-status=""
+      >全部</view>
+      <view
+        class="status-btn {{filterStatus === 'SUBMITTED' ? 'active' : ''}}"
+        bindtap="filterTickets"
+        data-status="SUBMITTED"
+      >待处理</view>
+      <view
+        class="status-btn {{filterStatus === 'IN_PROGRESS' ? 'active' : ''}}"
+        bindtap="filterTickets"
+        data-status="IN_PROGRESS"
+      >处理中</view>
+      <view
+        class="status-btn {{filterStatus === 'COMPLETED' ? 'active' : ''}}"
+        bindtap="filterTickets"
+        data-status="COMPLETED"
+      >已完成</view>
+    </view>
+
+    <!-- 工单加载中 -->
+    <view class="loading-box" wx:if="{{ticketsLoading}}">
+      <view class="loading-spinner"></view>
+    </view>
+
+    <!-- 工单列表 -->
+    <view
+      class="ticket-card"
+      wx:for="{{myTickets}}"
+      wx:key="id"
+      id="ticket-{{item.id}}"
+    >
+      <view class="ticket-header">
+        <text class="ticket-category">{{item.category}}</text>
+        <view class="ticket-status-badge status-{{item.status}}">
+          {{statusLabels[item.status] || item.status}}
+        </view>
+      </view>
+      <text class="ticket-title">{{item.title}}</text>
+      <text class="ticket-location">📍 {{item.repairLocation}}</text>
+      <view class="ticket-footer">
+        <text class="ticket-time">{{item.createTime}}</text>
+        <text class="ticket-staff" wx:if="{{item.assignedStaffName}}">
+          👷 {{item.assignedStaffName}}
+        </text>
+      </view>
+    </view>
+
+    <view class="empty-box" wx:if="{{myTickets.length === 0 && !ticketsLoading}}">
+      <text class="empty-icon">🔧</text>
+      <text class="empty-text">暂无报修工单</text>
+      <text class="empty-sub" bindtap="switchTab" data-tab="submit">点击"提交报修"发起工单 ›</text>
+    </view>
+  </scroll-view>
+</view>

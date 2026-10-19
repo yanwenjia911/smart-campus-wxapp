@@ -1,0 +1,104 @@
+<!-- pages/index/index.wxml - 首页 -->
+<view class="index-container">
+  <!-- 顶部欢迎栏 -->
+  <view class="header-bar">
+    <view class="welcome-info">
+      <text class="greeting">{{greeting}}</text>
+      <text class="date-text">{{dateText}}</text>
+    </view>
+    <view class="header-avatar">
+      <text class="avatar-emoji">👤</text>
+    </view>
+  </view>
+
+  <!-- 置顶通知 Banner -->
+  <view class="notice-banner" wx:if="{{topNotices.length > 0}}">
+    <swiper
+      class="notice-swiper"
+      autoplay="{{true}}"
+      interval="3000"
+      circular="{{true}}"
+    >
+      <swiper-item
+        wx:for="{{topNotices}}"
+        wx:key="id"
+        bindtap="goToNoticeDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="banner-item">
+          <text class="banner-tag">📢 置顶</text>
+          <text class="banner-title" wx:if="{{item.title}}">{{item.title}}</text>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 快捷功能入口 -->
+  <view class="section-title">
+    <text>快捷服务</text>
+  </view>
+  <view class="quick-grid">
+    <view class="quick-item" id="quick-course" bindtap="goToCourse">
+      <view class="quick-icon bg-blue">📅</view>
+      <text class="quick-label">课程表</text>
+    </view>
+    <view class="quick-item" id="quick-grade" bindtap="goToGrade">
+      <view class="quick-icon bg-orange">📊</view>
+      <text class="quick-label">我的成绩</text>
+    </view>
+    <view class="quick-item" id="quick-card" bindtap="goToCard">
+      <view class="quick-icon bg-green">💳</view>
+      <text class="quick-label">校园卡</text>
+    </view>
+    <view class="quick-item" id="quick-repair" bindtap="goToRepair">
+      <view class="quick-icon bg-red">🔧</view>
+      <text class="quick-label">在线报修</text>
+    </view>
+
+  </view>
+
+  <!-- 最新通知 -->
+  <view class="section-header">
+    <text class="section-title-text">最新通知</text>
+    <text class="section-more" bindtap="goToNotice">查看全部 ›</text>
+  </view>
+
+  <!-- 通知加载中 -->
+  <view class="loading-box" wx:if="{{noticeLoading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 通知列表 -->
+  <view class="notice-list" wx:else>
+    <view
+      class="notice-card"
+      wx:for="{{latestNotices}}"
+      wx:key="id"
+      id="notice-{{item.id}}"
+      bindtap="goToNoticeDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="notice-left">
+        <view class="notice-type-tag {{item.type === '教务通知' ? 'tag-blue' : item.type === '活动通知' ? 'tag-orange' : 'tag-gray'}}">
+          {{item.type || '公告'}}
+        </view>
+      </view>
+      <view class="notice-content">
+        <text class="notice-title">{{item.title}}</text>
+        <view class="notice-meta">
+          <text class="notice-publisher">{{item.publisher}}</text>
+          <text class="notice-dot"> · </text>
+          <text class="notice-view">{{item.viewCount}}次浏览</text>
+        </view>
+      </view>
+      <view class="notice-arrow">›</view>
+    </view>
+
+    <view class="empty-notice" wx:if="{{latestNotices.length === 0}}">
+      <text class="empty-icon">📭</text>
+      <text class="empty-text">暂无通知</text>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,50 @@
+<!-- pages/notice/detail.wxml - 通知详情 -->
+<view class="detail-container" wx:if="{{!loading}}">
+  <!-- 头部信息 -->
+  <view class="detail-header">
+    <view class="header-tags">
+      <view class="type-badge {{notice.type === '教务通知' ? 'type-blue' : notice.type === '活动通知' ? 'type-orange' : 'type-gray'}}">
+        {{notice.type || '通知'}}
+      </view>
+      <view class="priority-badge high" wx:if="{{notice.priority === '高'}}">重要</view>
+      <view class="top-badge" wx:if="{{notice.isTop === 1}}">📌 置顶</view>
+    </view>
+    <text class="detail-title">{{notice.title}}</text>
+    <view class="detail-meta">
+      <text class="meta-item">📢 {{notice.publisher || '校方'}}</text>
+      <text class="meta-item">🕐 {{notice.publishTime}}</text>
+      <text class="meta-item">👁 {{notice.viewCount}} 次阅读</text>
+    </view>
+  </view>
+
+  <!-- 分割线 -->
+  <view class="divider"></view>
+
+  <!-- 正文内容 -->
+  <view class="detail-content">
+    <text class="content-text">{{notice.content}}</text>
+  </view>
+
+  <!-- 附件 -->
+  <view class="attachment-section" wx:if="{{notice.attachmentUrls && notice.attachmentUrls.length > 0}}">
+    <view class="section-title">📎 附件</view>
+    <view
+      class="attachment-item"
+      wx:for="{{notice.attachmentUrls}}"
+      wx:key="*this"
+    >
+      <text class="attachment-link">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 有效期提示 -->
+  <view class="expire-tip" wx:if="{{notice.expireTime}}">
+    <text>⏳ 有效期至 {{notice.expireTime}}</text>
+  </view>
+</view>
+
+<!-- 加载中 -->
+<view class="loading-box" wx:if="{{loading}}">
+  <view class="loading-spinner"></view>
+  <text class="loading-text">加载中...</text>
+</view>

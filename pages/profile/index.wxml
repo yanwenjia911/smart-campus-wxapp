@@ -1,0 +1,80 @@
+<!-- pages/profile/index.wxml - 个人中心 -->
+<view class="profile-container">
+
+  <!-- 顶部用户卡片 -->
+  <view class="user-card">
+    <view class="avatar-ring">
+      <view class="avatar-text">{{user ? user.nickname[0] : '?'}}</view>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{user ? user.nickname : '未登录'}}</text>
+      <view class="user-role-badge">
+        <text class="role-text">{{user ? (user.role === 'STUDENT' ? '学生' : '教师') : '--'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能入口列表 -->
+  <view class="section-card">
+    <view class="section-title">学习</view>
+    <view class="menu-list">
+      <view class="menu-item" id="menu-grade" bindtap="goToGrade">
+        <view class="menu-icon-wrap green">
+          <text class="menu-icon">📊</text>
+        </view>
+        <text class="menu-label">我的成绩</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" id="menu-course" bindtap="goToCourse">
+        <view class="menu-icon-wrap blue">
+          <text class="menu-icon">📚</text>
+        </view>
+        <text class="menu-label">课程表</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">服务</view>
+    <view class="menu-list">
+      <view class="menu-item" id="menu-card" bindtap="goToCard">
+        <view class="menu-icon-wrap orange">
+          <text class="menu-icon">💳</text>
+        </view>
+        <text class="menu-label">校园卡</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" id="menu-repair" bindtap="goToRepair">
+        <view class="menu-icon-wrap purple">
+          <text class="menu-icon">🔧</text>
+        </view>
+        <text class="menu-label">在线报修</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" id="menu-notice" bindtap="goToNotice">
+        <view class="menu-icon-wrap red">
+          <text class="menu-icon">📢</text>
+        </view>
+        <text class="menu-label">通知公告</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">账号</view>
+    <view class="menu-list">
+      <view class="menu-item danger" id="menu-logout" bindtap="handleLogout">
+        <view class="menu-icon-wrap gray">
+          <text class="menu-icon">🚪</text>
+        </view>
+        <text class="menu-label logout-label">退出登录</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="app-version">智慧校园 v1.0.0</view>
+
+</view>

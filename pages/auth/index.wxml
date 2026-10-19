@@ -1,0 +1,74 @@
+<!-- pages/auth/index.wxml - 登录/绑定页 -->
+<view class="auth-container">
+  <!-- 顶部 Logo 区 -->
+  <view class="auth-header">
+    <view class="logo-circle">
+      <text class="logo-icon">🎓</text>
+    </view>
+    <text class="app-name">智慧校园</text>
+    <text class="app-slogan">一站式校园服务平台</text>
+  </view>
+
+  <!-- 登录卡片 -->
+  <view class="auth-card">
+    <view class="card-title">
+      <text class="title-text">{{isFirstLogin ? '首次登录 - 绑定学号' : '微信快捷登录'}}</text>
+    </view>
+
+    <!-- 首次登录需绑定学号 -->
+    <block wx:if="{{isFirstLogin}}">
+      <view class="input-group">
+        <text class="input-label">学号 / 工号</text>
+        <input
+          class="auth-input"
+          id="input-student-id"
+          placeholder="请输入您的学号或工号"
+          value="{{studentId}}"
+          bindinput="onStudentIdInput"
+          maxlength="20"
+        />
+      </view>
+      <view class="input-group">
+        <text class="input-label">姓名</text>
+        <input
+          class="auth-input"
+          id="input-name"
+          placeholder="请输入您的真实姓名"
+          value="{{name}}"
+          bindinput="onNameInput"
+          maxlength="20"
+        />
+      </view>
+      <button
+        class="btn-bind"
+        id="btn-bind"
+        bindtap="handleBind"
+        loading="{{loading}}"
+        disabled="{{loading}}"
+      >
+        绑定并登录
+      </button>
+      <text class="bind-tip">首次登录需绑定学号，用于查询课表、成绩等信息</text>
+    </block>
+
+    <!-- 普通微信登录 -->
+    <block wx:else>
+      <button
+        class="btn-wechat"
+        id="btn-wechat-login"
+        bindtap="handleWxLogin"
+        loading="{{loading}}"
+        disabled="{{loading}}"
+      >
+        <text class="wechat-icon">💬</text>
+        微信一键登录
+      </button>
+      <text class="login-tip">登录即表示您同意相关服务协议</text>
+    </block>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="auth-footer">
+    <text class="footer-text">© 2025 智慧校园服务平台</text>
+  </view>
+</view>

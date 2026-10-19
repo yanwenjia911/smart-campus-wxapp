@@ -1,0 +1,96 @@
+<!-- pages/course/detail.wxml - 课程详情 -->
+<view class="detail-container">
+
+  <!-- 加载中 -->
+  <view class="loading-box" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 主内容 -->
+  <block wx:if="{{!loading && course}}">
+
+    <!-- 顶部彩色头部 -->
+    <view class="course-hero">
+      <view class="hero-icon">📖</view>
+      <text class="hero-name">{{course.courseName}}</text>
+      <view class="hero-type-badge {{course.type === '必修' ? 'required' : 'elective'}}">
+        {{course.type || '选修'}}
+      </view>
+    </view>
+
+    <!-- 详情信息卡片 -->
+    <view class="info-card">
+      <view class="info-title">课程信息</view>
+
+      <view class="info-row" id="info-teacher">
+        <view class="info-icon-wrap">
+          <text class="info-icon">👤</text>
+        </view>
+        <view class="info-content">
+          <text class="info-label">授课教师</text>
+          <text class="info-value">{{course.teacherName || '暂无'}}</text>
+        </view>
+      </view>
+
+      <view class="info-row" id="info-location">
+        <view class="info-icon-wrap">
+          <text class="info-icon">📍</text>
+        </view>
+        <view class="info-content">
+          <text class="info-label">上课地点</text>
+          <text class="info-value">{{course.location || '暂无'}}</text>
+        </view>
+      </view>
+
+      <view class="info-row" id="info-time">
+        <view class="info-icon-wrap">
+          <text class="info-icon">⏰</text>
+        </view>
+        <view class="info-content">
+          <text class="info-label">上课节次</text>
+          <text class="info-value">第{{course.startClass}}~{{course.startClass + course.period - 1}}节（共{{course.period}}节）</text>
+        </view>
+      </view>
+
+      <view class="info-row" id="info-weekday">
+        <view class="info-icon-wrap">
+          <text class="info-icon">📅</text>
+        </view>
+        <view class="info-content">
+          <text class="info-label">星期</text>
+          <text class="info-value">{{weekDayText}}</text>
+        </view>
+      </view>
+
+      <view class="info-row" id="info-weekrange">
+        <view class="info-icon-wrap">
+          <text class="info-icon">📆</text>
+        </view>
+        <view class="info-content">
+          <text class="info-label">教学周次</text>
+          <text class="info-value">{{course.weekRange || '全学期'}}周</text>
+        </view>
+      </view>
+
+    </view>
+
+    <!-- 时间安排卡片 -->
+    <view class="time-card">
+      <view class="info-title">今日课表</view>
+      <view class="time-slot" wx:for="{{classTimeMap[course.startClass] || []}}" wx:key="*this">
+        <view class="time-dot"></view>
+        <text class="time-text">{{item}}</text>
+      </view>
+    </view>
+
+  </block>
+
+  <!-- 空状态 -->
+  <view class="empty-box" wx:if="{{!loading && !course}}">
+    <text class="empty-icon">😕</text>
+    <text class="empty-text">课程信息不存在</text>
+    <view class="btn-back" id="btn-back" bindtap="goBack">返回</view>
+  </view>
+
+</view>

@@ -1,0 +1,90 @@
+page {
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.message-scroll {
+  flex: 1;
+  padding: 20rpx;
+  box-sizing: border-box;
+  overflow-anchor: auto;
+}
+
+.message-item {
+  display: flex;
+  margin-bottom: 30rpx;
+  align-items: flex-start;
+}
+
+/* AI 的消息靠左 */
+.msg-left {
+  flex-direction: row;
+}
+.msg-left .bubble {
+  background-color: #ffffff;
+  color: #333333;
+  margin-left: 20rpx;
+  border-radius: 0 20rpx 20rpx 20rpx;
+}
+
+/* 用户的消息靠右 */
+.msg-right {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.msg-right .bubble {
+  background-color: #07c160; /* 微信绿 */
+  color: #ffffff;
+  margin-right: 20rpx;
+  border-radius: 20rpx 0 20rpx 20rpx;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+}
+
+.bubble {
+  max-width: 65%;
+  padding: 20rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.thinking {
+  color: #888888;
+  font-style: italic;
+}
+
+/* 底部输入框区域 */
+.input-bottom-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #ffffff;
+  border-top: 1rpx solid #eeeeee;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.chat-input {
+  flex: 1;
+  background-color: #f1f1f1;
+  height: 70rpx;
+  border-radius: 35rpx;
+  padding: 0 30rpx;
+  margin-right: 20rpx;
+  font-size: 28rpx;
+}
+
+.send-btn {
+  margin: 0;
+}

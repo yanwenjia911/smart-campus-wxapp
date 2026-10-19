@@ -1,0 +1,28 @@
+<view class="chat-container">
+  <!-- 聊天记录滚动区 -->
+  <scroll-view class="message-scroll" scroll-y="true" scroll-into-view="{{ 'msg-' + (messageList.length - 1) }}">
+    <block wx:for="{{messageList}}" wx:key="index">
+      <view class="message-item {{item.role === 'user' ? 'msg-right' : 'msg-left'}}" id="msg-{{index}}">
+        <!-- AI 头像 (左侧) -->
+        <image wx:if="{{item.role === 'ai'}}" class="avatar" src="/assets/icons/ai-avatar.png"></image>
+        
+        <!-- 气泡内容 -->
+        <view class="bubble">{{item.content}}</view>
+
+        <!-- 用户头像 (右侧) -->
+        <image wx:if="{{item.role === 'user'}}" class="avatar" src="/assets/icons/user-avatar.png"></image>
+      </view>
+    </block>
+
+    <!-- AI 思考中的占位提示 -->
+    <view wx:if="{{isThinking}}" class="message-item msg-left">
+      <view class="bubble thinking">AI 思考中...</view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部输入区 -->
+  <view class="input-bottom-bar">
+    <input class="chat-input" placeholder="问问智慧校园助手..." value="{{inputValue}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage" />
+    <button class="send-btn" type="primary" size="mini" bindtap="sendMessage" disabled="{{isThinking}}">发送</button>
+  </view>
+</view>

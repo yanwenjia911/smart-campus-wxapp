@@ -1,0 +1,105 @@
+<!-- pages/grade/index.wxml - 成绩页 -->
+<view class="grade-container">
+  <!-- 顶部统计卡 -->
+  <view class="stat-card">
+    <view class="stat-header">
+      <picker mode="selector" range="{{semesters}}" value="{{semesterIndex}}" bindchange="onSemesterChange">
+        <view class="semester-picker">
+          <text class="semester-text">{{currentSemester}}</text>
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+      <view class="view-tabs">
+        <text class="tab {{viewMode === 'semester' ? 'active' : ''}}" bindtap="setSemesterView">本学期</text>
+        <text class="tab {{viewMode === 'all' ? 'active' : ''}}" bindtap="setAllView">全部</text>
+      </view>
+    </view>
+    <view class="stat-row">
+      <view class="stat-item">
+        <text class="stat-value">{{totalCredits}}</text>
+        <text class="stat-label">学期学分</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value gpa-value">{{averageGpa}}</text>
+        <text class="stat-label">平均绩点</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{grades.length}}</text>
+        <text class="stat-label">课程数量</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-box" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载成绩...</text>
+  </view>
+
+  <!-- 本学期成绩列表 -->
+  <view class="grade-list" wx:elif="{{viewMode === 'semester'}}">
+    <view
+      class="grade-card"
+      wx:for="{{grades}}"
+      wx:key="id"
+      id="grade-{{item.id}}"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="grade-left">
+        <view class="score-circle" style="border-color: {{item.totalScore >= 90 ? '#1aad19' : item.totalScore >= 60 ? '#1677ff' : '#ff4d4f'}}">
+          <text class="score-num">{{item.totalScore || '-'}}</text>
+        </view>
+      </view>
+      <view class="grade-info">
+        <text class="course-name">{{item.courseName}}</text>
+        <text class="course-code">{{item.courseCode}}</text>
+        <view class="grade-meta-row">
+          <text class="meta-item">学分: {{item.credit}}</text>
+          <text class="meta-item">绩点: {{item.gpa}}</text>
+          <text class="grade-level-badge">{{item.gradeLevel}}</text>
+        </view>
+        <text class="teacher-text">{{item.teacherName}} · {{item.examType}}</text>
+      </view>
+    </view>
+
+    <view class="empty-box" wx:if="{{grades.length === 0 && !loading}}">
+      <text class="empty-icon">📝</text>
+      <text class="empty-text">本学期暂无成绩</text>
+    </view>
+  </view>
+
+  <!-- 全部学期汇总 -->
+  <view class="all-view" wx:elif="{{viewMode === 'all'}}">
+    <view
+      class="semester-section"
+      wx:for="{{allSummaries}}"
+      wx:key="semester"
+    >
+      <view class="semester-group-header">
+        <text class="semester-group-name">{{item.semester}}</text>
+        <view class="semester-group-stat">
+          <text class="group-gpa">绩点 {{item.averageGpa}}</text>
+          <text class="group-credits">{{item.totalCredits}} 学分</text>
+        </view>
+      </view>
+      <view
+        class="grade-card-mini"
+        wx:for="{{item.grades}}"
+        wx:key="id"
+        wx:for-item="grade"
+      >
+        <text class="mini-name">{{grade.courseName}}</text>
+        <text class="mini-score" style="color: {{grade.totalScore >= 90 ? '#1aad19' : grade.totalScore >= 60 ? '#1677ff' : '#ff4d4f'}}">
+          {{grade.totalScore}}
+        </text>
+      </view>
+    </view>
+    <view class="empty-box" wx:if="{{allSummaries.length === 0}}">
+      <text class="empty-icon">📝</text>
+      <text class="empty-text">暂无成绩数据</text>
+    </view>
+  </view>
+</view>

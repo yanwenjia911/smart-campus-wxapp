@@ -1,0 +1,230 @@
+/* pages/repair/index.wxss */
+page { background: #f0f2f5; }
+
+.repair-container { display: flex; flex-direction: column; height: 100vh; }
+
+/* Tab 导航 */
+.tab-bar {
+  position: relative;
+  display: flex;
+  background: #fff;
+  border-bottom: 1rpx solid #eee;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 28rpx 0;
+  font-size: 30rpx;
+  color: #888;
+  transition: color 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.tab-item.active { color: #1aad19; font-weight: 600; }
+
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 4rpx;
+  background: #1aad19;
+  border-radius: 4rpx 4rpx 0 0;
+  transition: left 0.25s ease;
+}
+
+/* 表单区域 */
+.form-scroll { flex: 1; height: calc(100vh - 100rpx); }
+
+.form-section { padding: 24rpx 32rpx; }
+
+.form-item { margin-bottom: 32rpx; }
+
+.form-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.required-star::before {
+  content: '* ';
+  color: #ff4d4f;
+}
+
+/* 类别选择 */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+  background: #fff;
+  border-radius: 16rpx;
+  border: 2rpx solid #e8e8e8;
+  transition: all 0.2s;
+}
+
+.category-item.selected {
+  border-color: #1aad19;
+  background: #f0faf0;
+}
+
+.cat-icon { font-size: 40rpx; margin-bottom: 8rpx; }
+.cat-name { font-size: 24rpx; color: #555; }
+.category-item.selected .cat-name { color: #1aad19; font-weight: 600; }
+
+/* 输入框 */
+.form-input {
+  width: 100%;
+  height: 88rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 0 28rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: 2rpx solid #e8e8e8;
+  box-sizing: border-box;
+}
+
+/* 文本域 */
+.form-textarea {
+  width: 100%;
+  min-height: 180rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 28rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: 2rpx solid #e8e8e8;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 22rpx;
+  color: #bbb;
+  margin-top: 8rpx;
+}
+
+/* 提交按钮 */
+.form-submit { padding: 16rpx 0 40rpx; }
+
+.btn-submit {
+  width: 100%;
+  height: 96rpx;
+  background: linear-gradient(135deg, #1aad19, #0d8c0d);
+  border-radius: 48rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(26,173,25,0.3);
+}
+
+/* 工单列表 */
+.tickets-scroll { flex: 1; padding: 16rpx 32rpx; height: calc(100vh - 100rpx); }
+
+/* 状态筛选 */
+.status-filter {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 24rpx;
+  padding: 16rpx 0 8rpx;
+}
+
+.status-btn {
+  padding: 10rpx 24rpx;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  color: #666;
+  background: #fff;
+  border: 2rpx solid #e8e8e8;
+  white-space: nowrap;
+}
+
+.status-btn.active { background: #1aad19; color: #fff; border-color: #1aad19; }
+
+/* 工单卡片 */
+.ticket-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.ticket-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.ticket-category {
+  font-size: 24rpx;
+  color: #888;
+  background: #f5f5f5;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.ticket-status-badge {
+  font-size: 24rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.status-SUBMITTED { background: #fff7e6; color: #ff9500; }
+.status-ASSIGNED { background: #e6f4ff; color: #1677ff; }
+.status-IN_PROGRESS { background: #e8f7e8; color: #1aad19; }
+.status-COMPLETED { background: #f5f5f5; color: #666; }
+.status-CANCELLED { background: #fff1f0; color: #ff4d4f; }
+
+.ticket-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.ticket-location {
+  font-size: 24rpx;
+  color: #888;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.ticket-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-time { font-size: 22rpx; color: #bbb; }
+.ticket-staff { font-size: 24rpx; color: #1aad19; }
+
+/* 加载 & 空状态 */
+.loading-box { display: flex; justify-content: center; padding: 60rpx; }
+.loading-spinner {
+  width: 60rpx; height: 60rpx;
+  border: 4rpx solid #e8e8e8;
+  border-top-color: #1aad19;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-box { display: flex; flex-direction: column; align-items: center; padding: 80rpx; }
+.empty-icon { font-size: 100rpx; }
+.empty-text { font-size: 28rpx; color: #999; margin-top: 20rpx; }
+.empty-sub { font-size: 26rpx; color: #1aad19; margin-top: 12rpx; }

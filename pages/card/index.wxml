@@ -1,0 +1,115 @@
+<!-- pages/card/index.wxml - 校园卡页 -->
+<view class="card-container">
+  <!-- 加载中 -->
+  <view class="loading-box" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载校园卡...</text>
+  </view>
+
+  <block wx:else>
+    <!-- 卡片展示区 -->
+    <view class="card-visual">
+      <view class="campus-card {{cardInfo.status === 'LOST' ? 'card-lost' : ''}}">
+        <view class="card-top">
+          <text class="card-school">智慧校园</text>
+          <text class="card-type-label">{{cardInfo.cardType === 'STUDENT' ? '学生卡' : cardInfo.cardType === 'TEACHER' ? '教职工卡' : '员工卡'}}</text>
+        </view>
+        <view class="card-balance-area">
+          <text class="balance-label">账户余额（元）</text>
+          <text class="balance-amount">{{cardInfo.balance}}</text>
+        </view>
+        <view class="card-bottom">
+          <text class="card-number">{{cardInfo.cardNumber}}</text>
+          <view class="card-status-badge {{cardInfo.status === 'ACTIVE' ? 'status-active' : 'status-lost'}}">
+            {{cardInfo.status === 'ACTIVE' ? '✓ 正常' : '⚠ 已挂失'}}
+          </view>
+        </view>
+        <!-- 挂失遮罩 -->
+        <view class="lost-overlay" wx:if="{{cardInfo.status === 'LOST'}}">
+          <text class="lost-text">已挂失</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-grid">
+      <view class="action-item" id="btn-recharge" bindtap="showRecharge">
+        <text class="action-icon">💰</text>
+        <text class="action-label">充值</text>
+      </view>
+      <view class="action-item {{cardInfo.status === 'LOST' ? 'disabled' : ''}}" id="btn-report-lost" bindtap="handleReportLost">
+        <text class="action-icon">🔒</text>
+        <text class="action-label">{{cardInfo.status === 'LOST' ? '申请解挂' : '挂失'}}</text>
+      </view>
+    </view>
+
+    <!-- 交易记录 -->
+    <view class="section-header">
+      <text class="section-title">最近交易记录</text>
+    </view>
+
+    <view class="transaction-list">
+      <view
+        class="tx-item"
+        wx:for="{{transactions}}"
+        wx:key="id"
+        id="tx-{{item.id}}"
+      >
+        <view class="tx-icon-area">
+          <text class="tx-icon">{{item.transactionType === 'RECHARGE' ? '↑' : '↓'}}</text>
+        </view>
+        <view class="tx-info">
+          <text class="tx-desc">{{item.description || item.transactionType}}</text>
+          <text class="tx-location">{{item.location}} · {{item.transactionTime}}</text>
+        </view>
+        <text class="tx-amount {{item.transactionType === 'RECHARGE' ? 'amount-in' : 'amount-out'}}">
+          {{item.transactionType === 'RECHARGE' ? '+' : '-'}}{{item.amount}}
+        </text>
+      </view>
+
+      <view class="empty-box" wx:if="{{transactions.length === 0}}">
+        <text class="empty-icon">💳</text>
+        <text class="empty-text">暂无交易记录</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 充值弹窗 -->
+  <view class="modal-mask" wx:if="{{showRechargeModal}}" bindtap="closeModal">
+    <view class="recharge-modal" catchtap="">
+      <text class="modal-title">校园卡充值</text>
+      <view class="amount-grid">
+        <view
+          class="amount-item {{selectedAmount === item ? 'selected' : ''}}"
+          wx:for="{{rechargeOptions}}"
+          wx:key="*this"
+          wx:for-item="item"
+          bindtap="selectAmount"
+          data-amount="{{item}}"
+        >
+          <text class="amount-text">¥{{item}}</text>
+        </view>
+      </view>
+      <view class="custom-amount">
+        <text class="amount-prefix">¥</text>
+        <input
+          class="amount-input"
+          id="input-custom-amount"
+          placeholder="自定义金额"
+          type="digit"
+          value="{{customAmount}}"
+          bindinput="onCustomAmountInput"
+        />
+      </view>
+      <button
+        class="btn-confirm-recharge"
+        id="btn-confirm-recharge"
+        bindtap="confirmRecharge"
+        loading="{{recharging}}"
+      >
+        确认充值 ¥{{customAmount || selectedAmount || 0}}
+      </button>
+      <text class="modal-cancel" bindtap="closeModal">取消</text>
+    </view>
+  </view>
+</view>
